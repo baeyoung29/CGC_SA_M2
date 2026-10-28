@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>M2 SA - GELTURA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&display=swap">
+<style>
+:root{
+  --sky:#8fd3ff; --ink:#1d2b3a; --cream:#fff8e6; --grass:#4cc552; --berry:#ff5d6c; --gold:#ffc93c;
+  --display:"Lilita One","Arial Rounded MT Bold",system-ui,sans-serif;
+  --body:"Nunito",system-ui,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--sky);color:var(--ink);font-family:var(--body)}
+#scene{position:fixed;inset:0;display:block;touch-action:none}
+.hud{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.chip{display:flex;align-items:center;gap:8px;background:rgba(29,43,58,.78);color:var(--cream);border-radius:999px;padding:4px 14px 4px 6px;font-family:var(--display);font-size:20px;letter-spacing:.5px;font-variant-numeric:tabular-nums;width:max-content}
+.chip i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:14px}
+.chip .hp{background:var(--berry)} .chip .gem{background:var(--gold);color:var(--ink)}
+.help{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));max-width:220px;background:rgba(255,248,230,.9);border-radius:12px;padding:8px 12px;font-size:12.5px;line-height:1.4;font-weight:600}
+.help b{font-weight:800}
+.banner{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);text-align:center;pointer-events:none;max-width:calc(100% - 32px)}
+.banner .zone{display:inline-block;font-family:var(--display);font-size:clamp(22px,4vw,32px);color:var(--gold);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;background:var(--ink);padding:4px 26px 8px;border-radius:14px;
+  background-image:repeating-linear-gradient(135deg,transparent 0 10px,rgba(255,255,255,.07) 10px 20px)}
+.banner .stage{margin-top:6px;font-weight:800;font-size:14px;background:var(--cream);border-radius:999px;padding:4px 14px;display:inline-block;transition:opacity .25s}
+.banner .stage[data-empty="1"]{opacity:0}
+.toast{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.6);font-family:var(--display);font-size:34px;color:#fff;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.2,1.6,.4,1)}
+.toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media (max-width:520px){.help{display:none}}
+</style>
+
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div class="hud">
+  <div class="chip"><i class="hp">♥</i><span id="lives">3</span></div>
+  <div class="chip"><i class="gem">◆</i><span id="gems">0</span></div>
+</div>
+<div class="help"><b>Tap a path tile</b> to hop there. <b>Drag</b> to orbit, <b>scroll/pinch</b> to zoom. Collect gems along the trail.</div>
+<div class="banner"><div class="zone">Breezy Meadow</div><br><div class="stage" id="stage" data-empty="1">&nbsp;</div></div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
